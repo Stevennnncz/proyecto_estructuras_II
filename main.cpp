@@ -15,7 +15,7 @@ struct Vertice{
             subListaArcos = NULL;
             visitado = false;
     }
-};
+}*vertice;
 
 struct Arco{
     int distancia;
@@ -49,6 +49,65 @@ struct Vertice *   buscarVertice(string origen){
     return NULL;//no lo encontro
 }
 
+//Funcion para vertices, modifica el nombre
+bool modificar(string nombre)
+{
+
+    Vertice * tempV = buscarVertice(nombre);
+
+    if ( tempV == NULL)
+    {
+        cout<<"Persona no encontrada";
+        return false;
+    }
+    else
+    {
+
+        tempV->nombre = nuevoNombre;
+        cout<<"\nModificado con exito.";
+        return true;
+    }
+}
+
+//Funcion que permite eliminar un vertice
+bool eliminarVertice(string nom)
+{
+    if(vertice == NULL)
+    {
+        cout <<"\nLista vacia";
+        return false;
+    }
+    else if(vertice->nombre== nom)
+    {
+        vertice = vertice->sig;
+        return true;
+    }
+    else
+    {
+        Vertice *temp = vertice;
+        Vertice *tempAnt= vertice;
+        while(temp != NULL)
+        {
+
+            if(temp->nombre == nom) //borrar
+            {
+                tempAnt->sig  = temp->sig;
+                return true;
+            }
+
+            tempAnt= temp;
+            temp = temp->sig;
+        }
+
+        if(temp==NULL)
+        {
+            cout<<"El nombre no esta en la lista.";
+            return false;
+        }
+
+    }
+}
+
 void insertarArco(string origen, int dis, string des){
 
         struct Vertice *vOrigen = buscarVertice(origen);
@@ -76,7 +135,7 @@ void cargarDatos(){
         insertarVertice("C");
         insertarVertice("D");
         insertarVertice("E");
-        
+
         insertarArco("A",12,"B");
         insertarArco("B",12,"C");
 
@@ -84,7 +143,7 @@ void cargarDatos(){
         insertarArco("C",6,"B");
 
         insertarArco("B",14,"F");
-        insertarArco("F",14,"B");   
+        insertarArco("F",14,"B");
 
         insertarArco("C",8,"D");
         insertarArco("D",8,"C");
@@ -227,47 +286,8 @@ bool rutaCorta(struct Vertice *origen, string destino, string ruta, int dis){
 int main()
 {
         cargarDatos();
-        cout<<"\nRecorrido en Amplitud-----------------\n";
-        amplitud();
-
-
-        cout<<"\n\n---------------Recorrido en Profundidad a partir del vertice CQ----------------\n";
-        profundidad(buscarVertice("CQ"));
-        desmarcar();
-
-        cout<<"\n\n---------------Averigurar si hay ruta de CQ a Fortuna:\n";
-
-        buscarRuta(buscarVertice("CQ"), "Fortuna");
-        if(existeRuta == true)
-            cout<<"\n Si existe ruta";
-        else
-            cout<<"\nNo existe ruta";
-
-        existeRuta= false;
-        desmarcar();
-
-
-        cout<<"\n\nRutas de CQ a Fortuna............\n\n";
-        imprimirRuta(buscarVertice("Fortuna"), "CQ", "");
-        existeRuta= false;
-        desmarcar();
-
-        cout<<"\n\n.................Rutas con distancia...................\n";
-        imprimirRutaconDistancias(buscarVertice("Fortuna"), "Tanque", "",0);
-        existeRuta= false;
-        desmarcar();
-
-        rutaCorta(buscarVertice("Fortuna"), "CQ", "",0);
-        if(existeRuta == true){
-                    cout<<"\n\nLa ruta más corta es: "<<rutaMenor
-                    << "con una distancia de: "<<distanciaMenor;
-        }
-        else cout<<"\n\nNo existe ruta.................";
-        rutaMenor = "";
-        distanciaMenor= 0;
-        existeRuta= false;
-        desmarcar();
 
 
     return 0;
 }
+
