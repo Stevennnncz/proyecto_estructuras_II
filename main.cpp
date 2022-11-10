@@ -21,10 +21,12 @@ struct Arco{
     int distancia;
     string destino;
     struct Arco *sigA;//siguiente arco.
+    struct Arco *antA;//anterior arco.
     Arco(int dis, string des){
             distancia = dis;
             destino = des;
             sigA = NULL;
+            antA = NULL;
     }
 };
 
@@ -52,7 +54,6 @@ struct Vertice *   buscarVertice(string origen){
 //Funcion para vertices, modifica el nombre
 bool modificar(string nombre)
 {
-
     Vertice * tempV = buscarVertice(nombre);
 
     if ( tempV == NULL)
@@ -62,7 +63,6 @@ bool modificar(string nombre)
     }
     else
     {
-
         tempV->nombre = nuevoNombre;
         cout<<"\nModificado con exito.";
         return true;
@@ -125,8 +125,66 @@ void insertarArco(string origen, int dis, string des){
 
         //se inserto al inicio de la sublista de Arcos
         nuevoArco->sigA = vOrigen->subListaArcos;
+        nuevoArco->antA = NULL
         vOrigen->subListaArcos = nuevoArco;
+}
 
+bool buscarArco(int dis, string des, nodo* lista){
+
+    nodo*temp = lista;
+    while(temp != NULL){
+
+        if(x == temp->num)
+            return true;
+        temp = temp->sig;
+    }
+
+return false;
+
+void modificar(int x, int nuevoValor, nodo*lista){
+
+
+    nodo* modif = buscarArco(x, lista);
+    if(modif!= NULL)
+        modif->num = nuevoValor;
+}
+
+bool eliminarArco(int id)
+{
+    if(lEfimeridad == NULL)
+    {
+        cout <<"\nLista vacia";
+        return false;
+    }
+    else if(lEfimeridad->id == id)
+    {
+        lEfimeridad = lEfimeridad->sig;
+        return true;
+    }
+    else //si esta en medio o al final de la lista
+    {
+        Efimeridad *temp = lEfimeridad;
+        Efimeridad *tempAnt= lEfimeridad;
+        while(temp != NULL)
+        {
+
+            if(temp->id == id) //borrar
+            {
+                tempAnt->sig  = temp->sig;
+                return true;
+            }
+
+            tempAnt= temp;
+            temp = temp->sig;
+        }
+
+        if(temp==NULL)
+        {
+            cout<<"La efimeridad no esta en la lista.";
+            return false;
+        }
+
+    }
 }
 
 void cargarDatos(){
