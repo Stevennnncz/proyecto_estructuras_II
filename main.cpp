@@ -129,15 +129,19 @@ void insertarArco(string origen, int dis, string des){
         vOrigen->subListaArcos = nuevoArco;
 }
 
-bool buscarArco(int dis, string des, nodo* lista){
+bool buscarArco(int dis, string des, Arco* subListaArcos)
+{
 
-    nodo*temp = lista;
-    while(temp != NULL){
+    Arco*temp = subListaArcos;
+    while(temp != NULL)
+    {
 
-        if(x == temp->num)
+        if(dis == temp->num && des == temp-> dest)
             return true;
         temp = temp->sig;
     }
+    return false;
+}
 
 return false;
 
