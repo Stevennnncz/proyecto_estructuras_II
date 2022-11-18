@@ -347,9 +347,108 @@ bool rutaCorta(struct Vertice *origen, string destino, string ruta, int dis){
 }
 int main()
 {
-        cargarDatos();
+    cargarDatos();
+    int op;
+    op = -1;
+    while(op != 0)
+    {
+
+        cout<<"\nBienvenido al simulador de caminatas"<<endl;
+
+        cout<<"Ingrese 1 para crear, modificar o borrar un vertice"<<endl;
+
+        cout<<"Ingrese 2 para crear, modificar o borrar un arco"<<endl;
+
+        cout<<"Ingrese 3 para crear, modificar o borrar una persona"<<endl;
+
+        cout<<"Ingrese 4 para imprimir los arcos, vertices o personas"<<endl;
+
+        cout<<"Ingrese 5 para imprimir el estado de las personas en el avance"<<endl;
+
+        cout<<"Ingrese 6 para saber cual es la persona que hizo mas amigos"<<endl;
+
+        cout<<"Ingrese 7 para saber cual es la primera persona en terminar la caminata"<<endl;
+
+        cout<<"Ingrese 8 para saber cual es la ultima persona en terminar la caminata"<<endl;
+
+        cout<<"Ingrese 9 para imprimir el grafo en amplitud"<<endl;
+
+        cout<<"Ingrese 10 para imprimir el arreglo"<<endl;
+
+        cout<<"Ingrese 11 para imprimir las rutas cortas para las personas que avanzan de la forma 3 y 4."<<endl;
+
+        cout<<"Ingrese 12 para 9 imprimir la cantidad y el nombre de los amigos que logro realizar una persona X"<<endl;
+
+        cout<<"Ingrese 13 para imprimir cuales personas no encontraron algun amigo"<<endl;
+        
+        cout<<"Ingrese 14 para imprimir cuales no pudieron realizar la caminata al no existir ruta";
+
+        cout<<"Ingrese 0 para salir"<<endl;
+
+        cout<<"Ingrese la opcion que desea realizar: ";
 
 
+        cin  >> op;
+        cout<<endl;
+
+
+        if(op == 1)
+        {
+            int ope;
+            ope = -1;
+            while(ope != 0){
+                cout<<"Ingrese 1 si desea crear un vertice";
+                
+                cout<<"Ingrese 2 si desea modificar un vertice";
+                
+                cout<<"Ingrese 3 si desea borrar un vertice";
+
+                cout<<"Ingrese 0 para salir"<<endl;
+
+                cout<<"Ingrese la opcion que desea realizar: ";
+                
+                cin  >> ope;
+                cout<<endl;
+            }
+        }
+        if(op == 2)
+        {
+            int oper;
+            oper = -1;
+            while(oper != 0){
+                cout<<"Ingrese 1 si desea crear un arco";
+                
+                cout<<"Ingrese 2 si desea modificar un arco";
+                
+                cout<<"Ingrese 3 si desea borrar un arco";
+
+                cout<<"Ingrese 0 para salir"<<endl;
+
+                cout<<"Ingrese la opcion que desea realizar: ";
+                
+                cin  >> oper;
+                cout<<endl;
+            }
+        }
+        if(op == 3)
+        {
+            int opera;
+            opera = -1;
+            while(opera != 0){
+                cout<<"Ingrese 1 si desea crear una persona";
+                
+                cout<<"Ingrese 2 si desea modificar una persona";
+                
+                cout<<"Ingrese 3 si desea borrar una persona";
+
+                cout<<"Ingrese 0 para salir"<<endl;
+
+                cout<<"Ingrese la opcion que desea realizar: ";
+                
+                cin  >> opera;
+                cout<<endl;
+            }
+        }
     return 0;
 }
 
