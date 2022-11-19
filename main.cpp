@@ -1,5 +1,204 @@
 #include <iostream>
 using namespace std;
+
+//Lista de objetos persona
+struct Persona {
+    string verticeInicial;
+    int id;
+    string nombre;
+    int formaDeAvance;
+    int NumeroAmigos;
+    Persona *sig;
+
+    struct Amigos *sublista;
+
+    Persona(string n, int FA, string VI, int ind,int num) {
+        nombre = n;
+        verticeInicial = VI;
+        formaDeAvance = FA;
+        id = ind;
+        NumeroAmigos = num;
+        sublista = NULL;
+        sig = NULL;
+    }
+}*lPersonas;
+
+//Funcion que busca una persona en la lista por su nombre
+struct Persona*BuscarPersona(string Name){
+    struct Persona*temp = lPersonas;
+    if (temp == NULL){
+        return NULL;
+    }
+    else{
+        while(temp != NULL){
+            if (Name == temp->nombre){
+                return temp;
+            }
+            temp = temp->sig;
+        }
+    }
+    return NULL;
+}
+
+//Funcion que inserta una nueva persona a la lista
+void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n){
+    if(BuscarPersona(name) == NULL){
+        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n);
+        nn->sig = lPersonas;
+        lPersonas == nn;
+    } else{
+        cout<<"La persona ya se encuenta en la lista.";
+    }
+}
+
+//Funcion que elimina una persona de la lista
+bool eliminarLluvia(string name){
+    if (lPersonas == NULL){
+        cout<<"\nLa lista perosnas esta vacia";
+        return false;
+    }else if(lPersonas->nombre == name){
+        lPersonas = lPersonas->sig;
+        return true;
+    }else{
+        Persona*temp = lPersonas;
+        Persona*tempAnt = lPersonas;
+
+        while (temp != NULL){
+            if(temp->nombre == name){
+                tempAnt->sig = temp->sig;
+                return true;
+            }
+            tempAnt = temp;
+            temp = temp->sig;
+
+        }if (temp == NULL){
+            cout<<"La persona que quieres eliminar no esta en la lista.";
+            return false;
+        }
+    }
+}
+
+//Funcion que imprime el nombre y id de las personas en la lista
+void imprimirListaPersonas(Persona* lista){
+    if(lista == NULL){
+        cout<<"\nNo hay personas en la lista.";
+    } else{
+        Persona*temp = lista;
+        while (temp != NULL){
+            cout<<"Nombre:"<<temp->nombre<<", ";
+            cout<<"Id:"<<temp->id<<".\n\n";
+        }
+    }
+}
+
+//Funcion para agregarle amigos a las personas
+struct Amigos{
+    Amigos*sig;
+    struct Persona*enlace;
+    Amigos(struct Persona*A){
+        enlace=A;
+        sig=NULL;
+    }
+};
+
+//Funcion para que dos personas se hagan amiwis owo
+void cienAmigos(string nameP1,string nameP2){
+    Persona*persona1 = BuscarPersona(nameP1);
+    Persona*persona2 = BuscarPersona(nameP2);
+
+    Amigos*tem = persona1->sublista;
+
+    struct Amigos*nuevo = new Amigos(persona1);
+    struct Amigos*nuevo2 = new Amigos(persona2);
+
+    if (persona1->sublista == NULL && persona2->sublista == NULL){
+        persona1->sublista = nuevo2;
+        persona2->sublista = nuevo;
+
+    } else{
+        while (tem != NULL){
+            if (tem->enlace->nombre == persona2->nombre){
+                return;
+            } else{
+                tem = tem->sig;
+            }
+        }
+        nuevo2->sig = persona1->sublista;
+        persona1->sublista = nuevo2;
+        persona1->NumeroAmigos+=1;
+
+        nuevo->sig = persona2->sublista;
+        persona2->sublista = nuevo;
+        persona2->NumeroAmigos+=1;
+    }
+    return;
+}
+
+//Funcion que imprime quienes hicieron más amigos o quienes hicieron menos amigos
+void masAmigos(Persona* lista, string tipo){
+    Persona*tem = lista;
+    int i = 0;
+
+
+    //ver el mayor numero de amigos
+    while (tem != NULL){
+        if (tem->NumeroAmigos > i){
+            i = tem->NumeroAmigos;
+        }
+        tem = tem->sig;
+    }
+
+    //ver el menor numero de amigos
+    int min = i;
+    tem = lista;
+    while (tem != NULL){
+        if (tem->NumeroAmigos < min){
+            min = tem->NumeroAmigos;
+        }
+        tem = tem->sig;
+    }
+
+    if (tipo == "Amistad") {
+        tem = lista;
+        cout << "\nMayor numero de amigos ♥:\n";
+        while (tem != NULL) {
+            if (tem->NumeroAmigos == i) {
+                cout << "Nombre: " << tem->nombre << endl;
+                cout << "Numero de amigos: " << tem->NumeroAmigos << endl << endl;
+            }
+            tem = tem->sig;
+        }
+    }
+    else if(tipo == "La_bocchi"){
+        tem = lista;
+        cout << "\nMenor numero de amigos ¯\\_(ツ)_/¯:\n";
+        while (tem != NULL) {
+            if (tem->NumeroAmigos == min) {
+                cout << "Nombre: " << tem->nombre << endl;
+                cout << "ID: " << tem->id << endl;
+                cout << "Numero de amigos: " << tem->NumeroAmigos << endl << endl;
+            }
+            tem = tem->sig;
+        }
+    }
+}
+
+
+//No mamen banda como que se murio el Comisario Sebastian Yarrick ಥ_ಥ ಥ_ಥ ಥ_ಥ 😭😭😭
+
+//Funcion para imprimir el numero de amigos que hizo una persona X
+
+void amigosPersonaX(string name){
+    Persona*personaX = BuscarPersona(name);
+    cout<<"\n"<<personaX->nombre<<endl<<"Amigos: "<<personaX->NumeroAmigos;
+    while (personaX->sublista != NULL){
+        cout<<personaX->sublista->enlace->nombre<<endl;
+        personaX->sublista = personaX->sublista->sig;
+    }
+}
+
+
+
 //transporte cuidades y carreteras
 
 struct Vertice
