@@ -709,6 +709,32 @@ void primerPuesto(Persona* lista, string Quchao){ //el estring sirve para ver si
 }
 
 
+//Funcion que imprime toda la informacion que hay en la lista de personas
+void Doxeados(Persona*lista){
+    Persona*tem = lista;
+
+    cout<<"Lista de personas con toda la informacion que contiene:"<<endl<<endl;
+    while (tem != NULL){
+        cout<<"Nombre: "<<tem->nombre<<endl;
+        cout<<"ID: "<<tem->id<<endl;
+        cout<<"Tiempo de su caminata: "<<tem->minCaminata<<endl;
+        cout<<"Vertice inicial: "<<tem->verticeInicial<<endl;
+        cout<<"Su forma de avance durante la caminata: "<<tem->formaDeAvance<<endl;
+        cout<<"Numero de amigos que hizo en su caminata: "<<tem->NumeroAmigos<<endl;
+        if (tem->NumeroAmigos > 0) {
+            cout<<"Amigos que hizo (Nombre y ID) (⓿_⓿): "<<endl;
+            Amigos*sublistatem = tem->sublista;
+            while (tem->sublista != NULL) {
+                cout<<"Nombre: "<<sublistatem->enlace->nombre<<endl;
+                cout<<"ID: "<<sublistatem->enlace->id<<endl<<endl;
+                sublistatem = sublistatem->sig;
+            }
+        }
+        tem = tem->sig;
+    }
+}
+
+
 //¯\_(ツ)_/¯ pues lo que dice el nombre la funcion ¯\_(ツ)_/¯
 int main()
 {
