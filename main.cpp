@@ -205,11 +205,12 @@ void cienAmigos(string nameP1,string nameP2)
     return;
 }
 
-//Funcion que imprime quienes hicieron más amigos o quienes hicieron menos amigos
+//Funcion que imprime quienes hicieron más amigos o quienes hicieron 0 amigos
 void masAmigos(Persona* lista, string tipo)
 {
     Persona*tem = lista;
     int i = 0;
+    int asociales = 0;
 
 
     //ver el mayor numero de amigos
@@ -222,17 +223,6 @@ void masAmigos(Persona* lista, string tipo)
         tem = tem->sig;
     }
 
-    //ver el menor numero de amigos
-    int min = i;
-    tem = lista;
-    while (tem != NULL)
-    {
-        if (tem->NumeroAmigos < min)
-        {
-            min = tem->NumeroAmigos;
-        }
-        tem = tem->sig;
-    }
 
     if (tipo == "Amistad")
     {
@@ -251,16 +241,20 @@ void masAmigos(Persona* lista, string tipo)
     else if(tipo == "La_bocchi")
     {
         tem = lista;
-        cout << "\nMenor numero de amigos:\n";
+        cout << "\nPersonas con 0 amigos:\n";
         while (tem != NULL)
         {
-            if (tem->NumeroAmigos == min)
+            if (tem->NumeroAmigos == 0)
             {
                 cout << "Nombre: " << tem->nombre << endl;
                 cout << "ID: " << tem->id << endl;
                 cout << "Numero de amigos: " << tem->NumeroAmigos << endl << endl;
+                asociales+=1;
             }
             tem = tem->sig;
+        }
+        if (asociales == 0){
+            cout<<"Las personas que realizaron la caminata eran muy sociales y todos hicieron algun amigo ヽ(´▽`)/ \n";
         }
     }
 }
