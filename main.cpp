@@ -455,12 +455,37 @@ bool eliminarArco(int ti, string des, string origen)
 
 void cargarDatos()
 {
+    //Personas
+    insertarPersona("Andrés",2,"B",2745,0);
+    insertarPersona("Ana",4,"B",3298,0);
+    insertarPersona("Eric",1,"B",4673,0);
+    insertarPersona("María",2,"B",9001,0);
+    insertarPersona("Evelyn",2,"B",9872,0);
+    insertarPersona("José",3,"B",4587,0);
+    insertarPersona("Iván",2,"B",9120,0);
+    insertarPersona("Leo",1,"B",7581,0);
+    insertarPersona("Sara",3,"B",1260,0);
+    insertarPersona("Helena",4,"B",3965,0);
+
+    insertarPersona("Emma",4,"B",6301,0);
+    insertarPersona("Manuel",2,"B",6749,0);
+    insertarPersona("Mariana",1,"B",2710,0);
+    insertarPersona("Isabel",3,"B",2916,0);
+    insertarPersona("Jorge",3,"B",4528,0);
+    insertarPersona("Gabriel",1,"B",6471,0);
+    insertarPersona("Eduardo",4,"B",9371,0);
+    insertarPersona("Lucía",2,"B",1289,0);
+    insertarPersona("Gerardo",1,"B",3283,0);
+    insertarPersona("Johana",4,"B",8672,0);
+    
+    //Vertices
     insertarVertice("A");
     insertarVertice("B");
     insertarVertice("C");
     insertarVertice("D");
     insertarVertice("E");
 
+    //Arcos
     insertarArco("A",12,"B");
     insertarArco("B",12,"C");
 
