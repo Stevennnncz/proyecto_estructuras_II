@@ -44,17 +44,20 @@ struct Persona
     string nombre;
     int formaDeAvance;
     int NumeroAmigos;
+    int minCaminata;
     Persona *sig;
+
 
     struct Amigos *sublista;
 
-    Persona(string n, int FA, string VI, int ind,int num)
+    Persona(string n, int FA, string VI, int ind,int num, int minutos)
     {
         nombre = n;
         verticeInicial = VI;
         formaDeAvance = FA;
         id = ind;
         NumeroAmigos = num;
+        minCaminata = minutos;
         sublista = NULL;
         sig = NULL;
     }
@@ -83,11 +86,11 @@ struct Persona*BuscarPersona(string Name)
 }
 
 //Funcion que inserta una nueva persona a la lista
-void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n)
+void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n,int minutos)
 {
     if(BuscarPersona(name) == NULL)
     {
-        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n);
+        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n,minutos);
         nn->sig = lPersonas;
         lPersonas == nn;
     }
@@ -96,7 +99,6 @@ void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n)
         cout<<"La persona ya se encuenta en la lista.";
     }
 }
-
 //Funcion que elimina una persona de la lista
 bool eliminarPersona(string name)
 {
