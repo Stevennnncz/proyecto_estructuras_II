@@ -646,6 +646,68 @@ bool rutaCorta(struct Vertice *origen, string destino, string ruta, int dis)
     origen->visitado =false;
 }
 
+
+//Funcion que imprime quien fue mas rapido en completar su ruta (⓿_⓿) o quien fue el mas lento  {{{(>_<)}}}
+void primerPuesto(Persona* lista, string Quchao){ //el estring sirve para ver si retorna el mas rapido o el mas lento
+    Persona*tem = lista;
+    int franshescoVirgolini = 0;  //SOY FRANCESCO VIRGOLINI, LA MÁQUINA MÁS VELOZ DE TOTA ITALIA! 🥵🥵
+    int flashZootopia = 0;          //XDN't? 🦀🧀
+
+
+    //comprueba quien tardo mas minutos
+    while (tem != NULL){
+        if (tem->minCaminata > franshescoVirgolini){
+            franshescoVirgolini = tem->minCaminata;
+        }
+        tem = tem->sig;
+    }
+    //comprueba quien tardo menos minutos
+    tem = lista;
+    flashZootopia = franshescoVirgolini;
+    while (tem != NULL){
+        if (tem->minCaminata < flashZootopia){
+            flashZootopia = tem->minCaminata;
+        }
+        tem = tem->sig;
+    }
+
+    //si quieres al mas rapido
+    if (Quchao == "Rapidez")
+    {
+        tem = lista;
+        cout << "\nPrimero o primeros en terminar la caminata :\n";
+        while (tem != NULL)
+        {
+            if (tem->minCaminata == franshescoVirgolini)
+            {
+                cout << "Nombre: " << tem->nombre << endl;
+                cout << "Minutos de caminata: " << tem->minCaminata << endl;
+                cout << "id: " << tem->id << endl << endl;
+            }
+            tem = tem->sig;
+        }
+    }
+
+    //si quieres al mas lento
+    if (Quchao == "Lento")
+    {
+        tem = lista;
+        cout << "\nEl o los ultimos en terminar la caminata :\n";
+        while (tem != NULL)
+        {
+            if (tem->minCaminata == flashZootopia)
+            {
+                cout << "Nombre: " << tem->nombre << endl;
+                cout << "Minutos de caminata: " << tem->minCaminata << endl;
+                cout << "id: " << tem->id << endl << endl;
+            }
+            tem = tem->sig;
+        }
+    }
+}
+
+
+//¯\_(ツ)_/¯ pues lo que dice el nombre la funcion ¯\_(ツ)_/¯
 int main()
 {
     cargarDatos();
