@@ -452,27 +452,27 @@ bool eliminarArco(int ti, string des, string origen)
 void cargarDatos()
 {
   //Personas
-    insertarPersona("Andrés",2,"B",2745,0);
-    insertarPersona("Ana",4,"B",3298,0);
-    insertarPersona("Eric",1,"A",4673,0);
-    insertarPersona("María",2,"D",9001,0);
-    insertarPersona("Evelyn",2,"B",9872,0);
-    insertarPersona("José",3,"C",4587,0);
-    insertarPersona("Iván",2,"D",9120,0);
-    insertarPersona("Leo",1,"B",7581,0);
-    insertarPersona("Sara",3,"D",1260,0);
-    insertarPersona("Helena",4,"A",3965,0);
+    insertarPersona("Andrés",2,"B",2745,0,0);
+    insertarPersona("Ana",4,"B",3298,0,0);
+    insertarPersona("Eric",1,"A",4673,0,0);
+    insertarPersona("María",2,"D",9001,0,0);
+    insertarPersona("Evelyn",2,"B",9872,0,0);
+    insertarPersona("José",3,"C",4587,0,0);
+    insertarPersona("Iván",2,"D",9120,0,0);
+    insertarPersona("Leo",1,"B",7581,0,0);
+    insertarPersona("Sara",3,"D",1260,0,0);
+    insertarPersona("Helena",4,"A",3965,0,0);
 
-    insertarPersona("Emma",4,"B",6301,0);
-    insertarPersona("Manuel",2,"C",6749,0);
-    insertarPersona("Mariana",1,"C",2710,0);
-    insertarPersona("Isabel",3,"A",2916,0);
-    insertarPersona("Jorge",3,"D",4528,0);
-    insertarPersona("Gabriel",1,"A",6471,0);
-    insertarPersona("Eduardo",4,"C",9371,0);
-    insertarPersona("Lucía",2,"B",1289,0);
-    insertarPersona("Gerardo",1,"A",3283,0);
-    insertarPersona("Johana",4,"D",8672,0);
+    insertarPersona("Emma",4,"B",6301,0,0);
+    insertarPersona("Manuel",2,"C",6749,0,0);
+    insertarPersona("Mariana",1,"C",2710,0,0);
+    insertarPersona("Isabel",3,"A",2916,0,0);
+    insertarPersona("Jorge",3,"D",4528,0,0);
+    insertarPersona("Gabriel",1,"A",6471,0,0);
+    insertarPersona("Eduardo",4,"C",9371,0,0);
+    insertarPersona("Lucía",2,"B",1289,0,0);
+    insertarPersona("Gerardo",1,"A",3283,0,0);
+    insertarPersona("Johana",4,"D",8672,0,0);
     
     //Vertices
     insertarVertice("A");
