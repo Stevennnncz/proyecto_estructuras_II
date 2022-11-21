@@ -353,6 +353,24 @@ bool eliminarVertice(string nom, Vertice * sigV)
     }
 }
 
+//Funcion que imprime vertice
+void imprimirVertce(Vertice* lista)
+{
+    if(lista== NULL)
+        cout<<"\nLa lista esta vacia.";
+    else
+    {
+        Vertice* temp = lista;
+        while(temp != NULL)
+        {
+
+            cout<<temp->nombre<<endl;
+            temp = temp->sig;
+        }
+    }
+}
+
+//funcion que incerta arco
 void insertarArco(string origen, int ti, string des)
 {
     struct Vertice *vOrigen = buscarVertice(origen);
