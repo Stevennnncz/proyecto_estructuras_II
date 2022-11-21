@@ -981,6 +981,41 @@ int main()
                     cout<<endl;
                 }
             }
+            
+            if (op == 6){
+                masAmigos(lPersonas,"Amistad");
+                cout<<endl;
+            }
+            
+            if (op == 7){
+                primerPuesto(lPersonas,"Rapidez");
+                cout<<endl;
+            }
+            
+            if (op == 8){
+                primerPuesto(lPersonas,"Lento");
+                cout<<endl;
+            }
+
+            if (op == 10){
+                Doxeados(lPersonas);
+                cout<<endl;
+            }
+
+            if (op == 12){
+                cout<<"Lista de personas registradas: "<<endl;
+                imprimirListaPersonas(lPersonas);
+                string PersonaX;
+                cout<<"Ingrese el nombre de la persona: ";
+                cin >> PersonaX;
+                amigosPersonaX(PersonaX);
+                cout<<endl;
+            }
+
+            if (op == 13){
+                masAmigos(lPersonas,"La_bocchi");
+                cout<<endl;
+            }
 
         }
     }
