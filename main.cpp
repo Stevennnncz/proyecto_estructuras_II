@@ -845,7 +845,7 @@ int main()
                     string no;
                     cout<<"Ingrese el nombre del vertice:";
                     cin>>no;
-                     eliminarVertice(no, Vertice);
+                     eliminarVertice(no, grafo);
                 }
             }
         }
