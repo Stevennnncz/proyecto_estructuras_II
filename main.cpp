@@ -62,6 +62,7 @@ struct Persona
     }
 }*lPersonas;
 
+
 //Funcion que busca una persona en la lista por su nombre
 struct Persona*BuscarPersona(string Name)
 {
@@ -283,6 +284,14 @@ void insertarVertice(string nom)
     grafo = nuevoVertice;
 }
 
+void insertarVertice2(string nom)
+{
+    struct Vertice *nuevoVertice = new Vertice(nom);
+
+    nuevoVertice->sigV = grafo;
+    grafo = nuevoVertice;
+}
+
 struct Vertice *   buscarVertice(string origen)
 {
     struct Vertice *tempV = grafo;
@@ -353,7 +362,6 @@ bool eliminarVertice(string nom, Vertice * sigV)
     }
 }
 
-//Funcion que imprime vertice
 void imprimirVertce(Vertice* lista)
 {
     if(lista== NULL)
@@ -365,13 +373,35 @@ void imprimirVertce(Vertice* lista)
         {
 
             cout<<temp->nombre<<endl;
-            temp = temp->sig;
+            temp = temp->sigV;
         }
     }
 }
 
-//funcion que incerta arco
 void insertarArco(string origen, int ti, string des)
+{
+    struct Vertice *vOrigen = buscarVertice(origen);
+    struct Vertice *vDestino = buscarVertice(des);
+
+    if(vOrigen == NULL)
+    {
+        cout<<"\nNo se encuentra el origen.";
+        return;
+    }
+    if(vDestino == NULL)
+    {
+        cout<<"\nNo se encuentra el destino.";
+        return;
+    }
+    struct Arco *nuevoArco = new Arco(ti,des);
+
+    //se inserto al inicio de la sublista de Arcos
+    nuevoArco->sigA = vOrigen->subListaArcos;
+    nuevoArco->antA = NULL;
+    vOrigen->subListaArcos = nuevoArco;
+}
+
+void insertarArco2(string origen, int ti, string des)
 {
     struct Vertice *vOrigen = buscarVertice(origen);
     struct Vertice *vDestino = buscarVertice(des);
@@ -522,6 +552,14 @@ void cargarDatos()
     insertarVertice("D");
     insertarVertice("E");
 
+    insertarVertice2("A");
+    insertarVertice2("B");
+    insertarVertice2("C");
+    insertarVertice2("D");
+    insertarVertice2("E");
+    insertarVertice2("F");
+    insertarVertice2("G");
+
     //Arcos
     insertarArco("A",12,"B");
     insertarArco("B",12,"C");
@@ -529,14 +567,44 @@ void cargarDatos()
     insertarArco("B",6,"C");
     insertarArco("C",6,"B");
 
-    insertarArco("B",14,"F");
-    insertarArco("F",14,"B");
+    insertarArco("B",14,"E");
+    insertarArco("E",14,"B");
 
     insertarArco("C",8,"D");
     insertarArco("D",8,"C");
 
     insertarArco("D",10,"E");
     insertarArco("E",10,"D");
+
+    insertarArco2("A",12,"B");
+    insertarArco2("B",12,"C");
+
+    insertarArco2("B",6,"C");
+    insertarArco2("C",6,"B");
+
+    insertarArco2("B",14,"F");
+    insertarArco2("F",14,"B");
+
+    insertarArco2("C",8,"D");
+    insertarArco2("D",8,"C");
+
+    insertarArco2("D",10,"E");
+    insertarArco2("E",10,"D");
+
+    insertarArco2("F",12,"G");
+    insertarArco2("G",12,"F");
+
+    insertarArco2("C",6,"C");
+    insertarArco2("C",6,"C");
+
+    insertarArco2("A",14,"F");
+    insertarArco2("F",14,"A");
+
+    insertarArco2("C",8,"E");
+    insertarArco2("E",8,"C");
+
+    insertarArco2("B",10,"E");
+    insertarArco2("E",10,"B");
 }
 
 void amplitud()
@@ -749,6 +817,8 @@ void primerPuesto(Persona* lista, string Quchao){ //el string sirve para ver si 
     }
 }
 
+
+
 //Funcion que imprime toda la informacion que hay en la lista de personas
 void Doxeados(Persona*lista){
     Persona*tem = lista;
@@ -863,7 +933,7 @@ int main()
                     string no;
                     cout<<"Ingrese el nombre del vertice:";
                     cin>>no;
-                     eliminarVertice(no, grafo);
+
                 }
             }
         }
@@ -915,4 +985,3 @@ int main()
         }
     }
 }
-
