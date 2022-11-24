@@ -45,17 +45,19 @@ struct Persona
     int formaDeAvance;
     int NumeroAmigos;
     int minCaminata;
+    string Dedondesoy;
     Persona *sig;
 
     struct Amigos *sublista;
 
-    Persona(string n, int FA, string VI, int ind,int num, int minC)
+    Persona(string n, int FA, string VI, int ind,int num, int minC, string soy)
     {
         nombre = n;
         verticeInicial = VI;
         formaDeAvance = FA;
         id = ind;
-        minCaminata=minC;
+        minCaminata = minC;
+        Dedondesoy = soy;
         NumeroAmigos = num;
         sublista = NULL;
         sig = NULL;
@@ -86,11 +88,11 @@ struct Persona*BuscarPersona(string Name)
 }
 
 //Funcion que inserta una nueva persona a la lista
-void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC)
+void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC, string soy)
 {
     if(BuscarPersona(name) == NULL)
     {
-        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC);
+        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy);
         nn->sig = lPersonas;
         lPersonas == nn;
     }
@@ -256,7 +258,8 @@ void masAmigos(Persona* lista, string tipo)
             }
             tem = tem->sig;
         }
-        if (asociales == 0){
+        if (asociales == 0)
+        {
             cout<<"Las personas que realizaron la caminata eran muy sociales y todos hicieron algun amigo ヽ(´▽`)/ \n";
         }
     }
@@ -522,28 +525,28 @@ void imprimirArco(int ti, string des, string origen)
 
 void cargarDatos()
 {
-  //Personas
-    insertarPersona("Andrés",2,"B",2745,0,0);
-    insertarPersona("Ana",4,"B",3298,0,0);
-    insertarPersona("Eric",1,"A",4673,0,0);
-    insertarPersona("María",2,"D",9001,0,0);
-    insertarPersona("Evelyn",2,"B",9872,0,0);
-    insertarPersona("José",3,"C",4587,0,0);
-    insertarPersona("Iván",2,"D",9120,0,0);
-    insertarPersona("Leo",1,"B",7581,0,0);
-    insertarPersona("Sara",3,"D",1260,0,0);
-    insertarPersona("Helena",4,"A",3965,0,0);
+    //Personas
+    insertarPersona("Andrés",2,"B",2745,0,0,"");
+    insertarPersona("Ana",4,"B",3298,0,0,"");
+    insertarPersona("Eric",1,"A",4673,0,0,"");
+    insertarPersona("María",2,"D",9001,0,0,"");
+    insertarPersona("Evelyn",2,"B",9872,0,0,"");
+    insertarPersona("José",3,"C",4587,0,0,"");
+    insertarPersona("Iván",2,"D",9120,0,0,"");
+    insertarPersona("Leo",1,"B",7581,0,0,"");
+    insertarPersona("Sara",3,"D",1260,0,0,"");
+    insertarPersona("Helena",4,"A",3965,0,0,"");
 
-    insertarPersona("Emma",4,"B",6301,0,0);
-    insertarPersona("Manuel",2,"C",6749,0,0);
-    insertarPersona("Mariana",1,"C",2710,0,0);
-    insertarPersona("Isabel",3,"A",2916,0,0);
-    insertarPersona("Jorge",3,"D",4528,0,0);
-    insertarPersona("Gabriel",1,"A",6471,0,0);
-    insertarPersona("Eduardo",4,"C",9371,0,0);
-    insertarPersona("Lucía",2,"B",1289,0,0);
-    insertarPersona("Gerardo",1,"A",3283,0,0);
-    insertarPersona("Johana",4,"D",8672,0,0);
+    insertarPersona("Emma",4,"B",6301,0,0,"");
+    insertarPersona("Manuel",2,"C",6749,0,0,"");
+    insertarPersona("Mariana",1,"C",2710,0,0,"");
+    insertarPersona("Isabel",3,"A",2916,0,0,"");
+    insertarPersona("Jorge",3,"D",4528,0,0,"");
+    insertarPersona("Gabriel",1,"A",6471,0,0,"");
+    insertarPersona("Eduardo",4,"C",9371,0,0,"");
+    insertarPersona("Lucía",2,"B",1289,0,0,"");
+    insertarPersona("Gerardo",1,"A",3283,0,0,"");
+    insertarPersona("Johana",4,"D",8672,0,0,"");
 
     //Vertices
     insertarVertice("A");
@@ -562,7 +565,7 @@ void cargarDatos()
 
     //Arcos
     insertarArco("A",12,"B");
-    insertarArco("B",12,"C");
+    insertarArco("B",12,"A");
 
     insertarArco("B",6,"C");
     insertarArco("C",6,"B");
@@ -576,8 +579,10 @@ void cargarDatos()
     insertarArco("D",10,"E");
     insertarArco("E",10,"D");
 
+
+
     insertarArco2("A",12,"B");
-    insertarArco2("B",12,"C");
+    insertarArco2("B",12,"A");
 
     insertarArco2("B",6,"C");
     insertarArco2("C",6,"B");
@@ -729,18 +734,19 @@ bool imprimirRutaconDistancias(struct Vertice *origen, string destino, string ru
 }
 //variables globales
 string rutaMenor = "";
-int distanciaMenor = 0;
-bool rutaCorta(struct Vertice *origen, string destino, string ruta, int dis)
+int tiempoMenor = 0;
+// rutaAleatoria
+bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
 {
     if((origen == NULL) or (origen->visitado== true))
         return existeRuta;
 
     if(origen->nombre == destino)
     {
-        if((distanciaMenor==0) || (dis < distanciaMenor))
+        if((tiempoMenor==0) || (ti < tiempoMenor))
         {
-            distanciaMenor =dis;
-            rutaMenor = ruta+destino;
+            tiempoMenor = ti;
+            tiempoMenor = ruta+destino;
         }
         existeRuta= true;
         return existeRuta;
@@ -757,17 +763,19 @@ bool rutaCorta(struct Vertice *origen, string destino, string ruta, int dis)
     origen->visitado =false;
 }
 
-
 //Funcion que imprime quien fue mas rapido en completar su ruta  o quien fue el mas lento
-void primerPuesto(Persona* lista, string Quchao){ //el string sirve para ver si retorna el mas rapido o el mas lento
+void primerPuesto(Persona* lista, string Quchao)  //el string sirve para ver si retorna el mas rapido o el mas lento
+{
     Persona*tem = lista;
     int franshescoVirgolini = 0;
     int flashZootopia = 0;
 
 
     //comprueba quien tardo mas minutos
-    while (tem != NULL){
-        if (tem->minCaminata > franshescoVirgolini){
+    while (tem != NULL)
+    {
+        if (tem->minCaminata > franshescoVirgolini)
+        {
             franshescoVirgolini = tem->minCaminata;
         }
         tem = tem->sig;
@@ -775,8 +783,10 @@ void primerPuesto(Persona* lista, string Quchao){ //el string sirve para ver si 
     //comprueba quien tardo menos minutos
     tem = lista;
     flashZootopia = franshescoVirgolini;
-    while (tem != NULL){
-        if (tem->minCaminata < flashZootopia){
+    while (tem != NULL)
+    {
+        if (tem->minCaminata < flashZootopia)
+        {
             flashZootopia = tem->minCaminata;
         }
         tem = tem->sig;
@@ -820,21 +830,25 @@ void primerPuesto(Persona* lista, string Quchao){ //el string sirve para ver si 
 
 
 //Funcion que imprime toda la informacion que hay en la lista de personas
-void Doxeados(Persona*lista){
+void Doxeados(Persona*lista)
+{
     Persona*tem = lista;
 
     cout<<"Lista de personas con toda la informacion que contiene:"<<endl<<endl;
-    while (tem != NULL){
+    while (tem != NULL)
+    {
         cout<<"Nombre: "<<tem->nombre<<endl;
         cout<<"ID: "<<tem->id<<endl;
         cout<<"Tiempo de su caminata: "<<tem->minCaminata<<endl;
         cout<<"Vertice inicial: "<<tem->verticeInicial<<endl;
         cout<<"Su forma de avance durante la caminata: "<<tem->formaDeAvance<<endl;
         cout<<"Numero de amigos que hizo en su caminata: "<<tem->NumeroAmigos<<endl;
-        if (tem->NumeroAmigos > 0) {
+        if (tem->NumeroAmigos > 0)
+        {
             cout<<"Amigos que hizo (Nombre y ID): "<<endl;
             Amigos*sublistatem = tem->sublista;
-            while (tem->sublista != NULL) {
+            while (tem->sublista != NULL)
+            {
                 cout<<"Nombre: "<<sublistatem->enlace->nombre<<endl;
                 cout<<"ID: "<<sublistatem->enlace->id<<endl<<endl;
                 sublistatem = sublistatem->sig;
@@ -961,6 +975,7 @@ int main()
 
                 }
             }
+
             if(op == 3)
             {
                 int opera;
@@ -981,28 +996,39 @@ int main()
                     cout<<endl;
                 }
             }
-            
-            if (op == 6){
+
+            if (op == 5)
+            {
+
+                rutaAleatoria(buscarVertice(VI))
+            }
+
+            if (op == 6)
+            {
                 masAmigos(lPersonas,"Amistad");
                 cout<<endl;
             }
-            
-            if (op == 7){
+
+            if (op == 7)
+            {
                 primerPuesto(lPersonas,"Rapidez");
                 cout<<endl;
             }
-            
-            if (op == 8){
+
+            if (op == 8)
+            {
                 primerPuesto(lPersonas,"Lento");
                 cout<<endl;
             }
 
-            if (op == 10){
+            if (op == 10)
+            {
                 Doxeados(lPersonas);
                 cout<<endl;
             }
 
-            if (op == 12){
+            if (op == 12)
+            {
                 cout<<"Lista de personas registradas: "<<endl;
                 imprimirListaPersonas(lPersonas);
                 string PersonaX;
@@ -1012,7 +1038,8 @@ int main()
                 cout<<endl;
             }
 
-            if (op == 13){
+            if (op == 13)
+            {
                 masAmigos(lPersonas,"La_bocchi");
                 cout<<endl;
             }
