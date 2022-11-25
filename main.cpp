@@ -44,13 +44,14 @@ struct Persona
     string nombre;
     int formaDeAvance;
     int NumeroAmigos;
-    int minCaminata;
+    int minCaminata;//duracion caminata
     string Dedondesoy;
+    string Adondevoy;
     Persona *sig;
 
     struct Amigos *sublista;
 
-    Persona(string n, int FA, string VI, int ind,int num, int minC, string soy)
+    Persona(string n, int FA, string VI, int ind,int num, int minC, string soy, string voy)
     {
         nombre = n;
         verticeInicial = VI;
@@ -59,6 +60,7 @@ struct Persona
         minCaminata = minC;
         Dedondesoy = soy;
         NumeroAmigos = num;
+        Adondevoy= voy;
         sublista = NULL;
         sig = NULL;
     }
@@ -88,11 +90,11 @@ struct Persona*BuscarPersona(string Name)
 }
 
 //Funcion que inserta una nueva persona a la lista
-void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC, string soy)
+void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC, string soy, string voy)
 {
     if(BuscarPersona(name) == NULL)
     {
-        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy);
+        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy, voy);
         nn->sig = lPersonas;
         lPersonas == nn;
     }
@@ -153,6 +155,7 @@ void imprimirListaPersonas(Persona* lista)
         {
             cout<<"Nombre:"<<temp->nombre<<", ";
             cout<<"Id:"<<temp->id<<".\n\n";
+            temp = temp->sig;
         }
     }
 }
@@ -526,27 +529,27 @@ void imprimirArco(int ti, string des, string origen)
 void cargarDatos()
 {
     //Personas
-    insertarPersona("Andrés",2,"B",2745,0,0,"");
-    insertarPersona("Ana",4,"B",3298,0,0,"");
-    insertarPersona("Eric",1,"A",4673,0,0,"");
-    insertarPersona("María",2,"D",9001,0,0,"");
-    insertarPersona("Evelyn",2,"B",9872,0,0,"");
-    insertarPersona("José",3,"C",4587,0,0,"");
-    insertarPersona("Iván",2,"D",9120,0,0,"");
-    insertarPersona("Leo",1,"B",7581,0,0,"");
-    insertarPersona("Sara",3,"D",1260,0,0,"");
-    insertarPersona("Helena",4,"A",3965,0,0,"");
+    insertarPersona("Andrés",2,"B",2745,0,0,"","A");
+    insertarPersona("Ana",4,"B",3298,0,0,"","E");
+    insertarPersona("Eric",1,"A",4673,0,0,"","D");
+    insertarPersona("María",2,"D",9001,0,0,"","C");
+    insertarPersona("Evelyn",2,"B",9872,0,0,"", "D");
+    insertarPersona("José",3,"C",4587,0,0,"","A");
+    insertarPersona("Iván",2,"D",9120,0,0,"", "B");
+    insertarPersona("Leo",1,"B",7581,0,0,"", "C");
+    insertarPersona("Sara",3,"D",1260,0,0,"", "E");
+    insertarPersona("Helena",4,"A",3965,0,0,"", "E");
 
-    insertarPersona("Emma",4,"B",6301,0,0,"");
-    insertarPersona("Manuel",2,"C",6749,0,0,"");
-    insertarPersona("Mariana",1,"C",2710,0,0,"");
-    insertarPersona("Isabel",3,"A",2916,0,0,"");
-    insertarPersona("Jorge",3,"D",4528,0,0,"");
-    insertarPersona("Gabriel",1,"A",6471,0,0,"");
-    insertarPersona("Eduardo",4,"C",9371,0,0,"");
-    insertarPersona("Lucía",2,"B",1289,0,0,"");
-    insertarPersona("Gerardo",1,"A",3283,0,0,"");
-    insertarPersona("Johana",4,"D",8672,0,0,"");
+    insertarPersona("Emma",4,"B",6301,0,0,"", "A");
+    insertarPersona("Manuel",2,"C",6749,0,0,"", "E");
+    insertarPersona("Mariana",1,"C",2710,0,0,"", "D");
+    insertarPersona("Isabel",3,"A",2916,0,0,"", "C");
+    insertarPersona("Jorge",3,"D",4528,0,0,"", "A");
+    insertarPersona("Gabriel",1,"A",6471,0,0,"", "D");
+    insertarPersona("Eduardo",4,"C",9371,0,0,"","B");
+    insertarPersona("Lucía",2,"B",1289,0,0,"","C");
+    insertarPersona("Gerardo",1,"A",3283,0,0,"", "E");
+    insertarPersona("Johana",4,"D",8672,0,0,"", "E");
 
     //Vertices
     insertarVertice("A");
@@ -736,7 +739,7 @@ bool imprimirRutaconDistancias(struct Vertice *origen, string destino, string ru
 string rutaMenor = "";
 int tiempoMenor = 0;
 // rutaAleatoria
-bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
+/*bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
 {
     if((origen == NULL) or (origen->visitado== true))
         return existeRuta;
@@ -746,7 +749,7 @@ bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
         if((tiempoMenor==0) || (ti < tiempoMenor))
         {
             tiempoMenor = ti;
-            tiempoMenor = ruta+destino;
+            rutaMenor = ruta+destino;
         }
         existeRuta= true;
         return existeRuta;
@@ -757,10 +760,44 @@ bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
     while(tempA != NULL)
     {
 
-        rutaCorta(buscarVertice(tempA->destino), destino, ruta+origen->nombre, dis + tempA->tiempo);
+        rutaAleatoria(buscarVertice(tempA->destino), destino, ruta+origen->nombre, ti + tempA->tiempo);
         tempA = tempA->sigA;
     }
     origen->visitado =false;
+}*/
+
+void AvancePersonas(Persona* lista)
+{
+    if(lista == NULL)
+    {
+        cout<<"\nNo hay personas en la lista.";
+    }
+    else
+    {
+        Persona*temp = lista;
+        string origen = temp->verticeInicial;
+        struct Vertice *vOrigen = buscarVertice(origen);
+        struct Arco *arc = vOrigen->subListaArcos;
+        while (temp != NULL)
+            {
+                cout<<"Inicio"<<endl;
+                cout<<temp->nombre<<" inicia en "<<temp->verticeInicial<<" tipo de avance "<<temp->formaDeAvance<<endl;
+                temp = temp->sig;
+            }
+        if(temp->formaDeAvance==1)
+        {
+            while (temp != NULL)
+            {
+                cout<<"Avance aleatorio"<<endl;
+                if (buscarRuta(vOrigen, temp->Adondevoy)==true && origen != temp->Adondevoy){
+                    string alphabet = "ABCDE";
+                    string ch = alphabet(rand() % alphabet.size());
+                    cout<<temp->nombre<<"  se dirige a "<<temp->Adondevoy<<" y le quedan "<<temp->minCaminata<<" minutos para llegar"<<endl;
+                    temp = temp->sig;
+                }
+            }
+        }
+    }
 }
 
 //Funcion que imprime quien fue mas rapido en completar su ruta  o quien fue el mas lento
@@ -1000,7 +1037,6 @@ int main()
             if (op == 5)
             {
 
-                rutaAleatoria(buscarVertice(VI))
             }
 
             if (op == 6)
@@ -1047,3 +1083,4 @@ int main()
         }
     }
 }
+
