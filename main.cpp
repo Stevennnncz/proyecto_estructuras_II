@@ -64,7 +64,7 @@ struct Persona
         sublista = NULL;
         sig = NULL;
     }
-}*lPersonas;
+}*lPersonas, *lPersonasTipo1_2;
 
 
 //Funcion que busca una persona en la lista por su nombre
