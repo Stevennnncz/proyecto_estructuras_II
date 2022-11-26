@@ -105,22 +105,22 @@ void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, 
 }
 
 //Funcion que elimina una persona de la lista
-bool eliminarPersona(string name)
+bool eliminarPersona(string name,Persona*lista)
 {
-    if (lPersonas == NULL)
+    if (lista == NULL)
     {
-        cout<<"\nLa lista perosnas esta vacia";
+        cout<<"\nLa lista personas esta vacia";
         return false;
     }
-    else if(lPersonas->nombre == name)
+    else if(lista->nombre == name)
     {
-        lPersonas = lPersonas->sig;
+        lista = lista->sig;
         return true;
     }
     else
     {
-        Persona*temp = lPersonas;
-        Persona*tempAnt = lPersonas;
+        Persona*temp = lista;
+        Persona*tempAnt = lista;
 
         while (temp != NULL)
         {
