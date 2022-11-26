@@ -160,6 +160,21 @@ void imprimirListaPersonas(Persona* lista)
     }
 }
 
+//lista de personas con tipo de movimiento 1 o 2
+void insertarTipo1_2(){
+    if (lPersonas != NULL){
+        Persona*temp = lPersonas;
+        while (temp != NULL){
+            if (temp->formaDeAvance == 1 || temp->formaDeAvance == 2){
+                Persona*nn = temp;
+                nn->sig = lPersonasTipo1_2;
+                lPersonasTipo1_2 = nn;
+            }
+            temp = temp->sig;
+        }
+    }
+}
+
 //Funcion para agregarle amigos a las personas
 struct Amigos
 {
