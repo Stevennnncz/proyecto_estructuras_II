@@ -766,6 +766,15 @@ int tiempoMenor = 0;
     origen->visitado =false;
 }*/
 
+string ArcoRandom(Arco*lista)
+{
+    char alphabet[5] = {'A','B','C','D','E'};
+    char ch = alphabet[rand() % 5];
+    string s(1,ch);
+    return s;
+}
+
+int cont = 0;
 void AvancePersonas(Persona* lista)
 {
     if(lista == NULL)
@@ -775,23 +784,28 @@ void AvancePersonas(Persona* lista)
     else
     {
         Persona*temp = lista;
-        string origen = temp->verticeInicial;
-        struct Vertice *vOrigen = buscarVertice(origen);
-        struct Arco *arc = vOrigen->subListaArcos;
-        while (temp != NULL)
+        string origen;
+        if (cont == 0)
+        {
+            origen = temp->verticeInicial;
+
+            while (temp != NULL)
             {
                 cout<<"Inicio"<<endl;
                 cout<<temp->nombre<<" inicia en "<<temp->verticeInicial<<" tipo de avance "<<temp->formaDeAvance<<endl;
                 temp = temp->sig;
             }
+        }
         if(temp->formaDeAvance==1)
         {
             while (temp != NULL)
             {
+                struct Vertice *vOrigen = buscarVertice(origen);
+                struct Arco *arc = vOrigen->subListaArcos;
                 cout<<"Avance aleatorio"<<endl;
-                if (buscarRuta(vOrigen, temp->Adondevoy)==true && origen != temp->Adondevoy){
-                    string alphabet = "ABCDE";
-                    string ch = alphabet(rand() % alphabet.size());
+                if (buscarRuta(vOrigen, temp->Adondevoy)==true && origen != temp->Adondevoy)
+                {
+                    ArcoRandom(arc);
                     cout<<temp->nombre<<"  se dirige a "<<temp->Adondevoy<<" y le quedan "<<temp->minCaminata<<" minutos para llegar"<<endl;
                     temp = temp->sig;
                 }
@@ -799,7 +813,6 @@ void AvancePersonas(Persona* lista)
         }
     }
 }
-
 //Funcion que imprime quien fue mas rapido en completar su ruta  o quien fue el mas lento
 void primerPuesto(Persona* lista, string Quchao)  //el string sirve para ver si retorna el mas rapido o el mas lento
 {
