@@ -789,6 +789,26 @@ string ArcoRandom(Arco*lista)
     return s;
 }
 
+void imprimirinicio(Persona*lista)
+{
+    if(lista == NULL)
+    {
+        cout<<"\nNo hay personas en la lista.";
+    }
+    else
+    {
+        Persona*temp = lista;
+        string origen;
+        origen = temp->verticeInicial;
+        cout<<"Inicio"<<endl;
+        while (temp != NULL)
+        {
+            cout<<temp->nombre<<" inicia en "<<temp->verticeInicial<<" tipo de avance "<<temp->formaDeAvance<<endl;
+            temp = temp->sig;
+        }
+    }
+}
+
 int cont = 0;
 void AvancePersonas(Persona* lista)
 {
@@ -800,17 +820,9 @@ void AvancePersonas(Persona* lista)
     {
         Persona*temp = lista;
         string origen;
-        if (cont == 0)
-        {
-            origen = temp->verticeInicial;
+        origen = temp->verticeInicial;
 
-            while (temp != NULL)
-            {
-                cout<<"Inicio"<<endl;
-                cout<<temp->nombre<<" inicia en "<<temp->verticeInicial<<" tipo de avance "<<temp->formaDeAvance<<endl;
-                temp = temp->sig;
-            }
-        }
+
         if(temp->formaDeAvance==1)
         {
             while (temp != NULL)
@@ -818,16 +830,21 @@ void AvancePersonas(Persona* lista)
                 struct Vertice *vOrigen = buscarVertice(origen);
                 struct Arco *arc = vOrigen->subListaArcos;
                 cout<<"Avance aleatorio"<<endl;
-                if (buscarRuta(vOrigen, temp->Adondevoy)==true && origen != temp->Adondevoy)
+                if (buscarRuta(vOrigen, temp->Adondevoy)==true)
                 {
-                    ArcoRandom(arc);
+                    cout<<ArcoRandom(arc);
                     cout<<temp->nombre<<"  se dirige a "<<temp->Adondevoy<<" y le quedan "<<temp->minCaminata<<" minutos para llegar"<<endl;
-                    temp = temp->sig;
                 }
+
+                temp = temp->sig;
             }
+
         }
+
+
     }
 }
+
 //Funcion que imprime quien fue mas rapido en completar su ruta  o quien fue el mas lento
 void primerPuesto(Persona* lista, string Quchao)  //el string sirve para ver si retorna el mas rapido o el mas lento
 {
