@@ -64,7 +64,7 @@ struct Persona
         sublista = NULL;
         sig = NULL;
     }
-}*lPersonas, *lPersonasTipo1_2;
+}*lPersonas;
 
 
 //Funcion que busca una persona en la lista por su nombre
@@ -96,7 +96,7 @@ void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, 
     {
         Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy, voy);
         nn->sig = lPersonas;
-        lPersonas == nn;
+        lPersonas = nn;
     }
     else
     {
@@ -105,22 +105,22 @@ void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, 
 }
 
 //Funcion que elimina una persona de la lista
-bool eliminarPersona(string name,Persona*lista)
+bool eliminarPersona(string name)
 {
-    if (lista == NULL)
+    if (lPersonas == NULL)
     {
-        cout<<"\nLa lista personas esta vacia";
+        cout<<"\nLa lista perosnas esta vacia";
         return false;
     }
-    else if(lista->nombre == name)
+    else if(lPersonas->nombre == name)
     {
-        lista = lista->sig;
+        lPersonas = lPersonas->sig;
         return true;
     }
     else
     {
-        Persona*temp = lista;
-        Persona*tempAnt = lista;
+        Persona*temp = lPersonas;
+        Persona*tempAnt = lPersonas;
 
         while (temp != NULL)
         {
@@ -155,21 +155,6 @@ void imprimirListaPersonas(Persona* lista)
         {
             cout<<"Nombre:"<<temp->nombre<<", ";
             cout<<"Id:"<<temp->id<<".\n\n";
-            temp = temp->sig;
-        }
-    }
-}
-
-//lista de personas con tipo de movimiento 1 o 2
-void insertarTipo1_2(){
-    if (lPersonas != NULL){
-        Persona*temp = lPersonas;
-        while (temp != NULL){
-            if (temp->formaDeAvance == 1 || temp->formaDeAvance == 2){
-                Persona*nn = temp;
-                nn->sig = lPersonasTipo1_2;
-                lPersonasTipo1_2 = nn;
-            }
             temp = temp->sig;
         }
     }
@@ -293,6 +278,109 @@ void amigosPersonaX(string name)
     {
         cout<<personaX->sublista->enlace->nombre<<endl;
         personaX->sublista = personaX->sublista->sig;
+    }
+}
+
+//inserción al inicio de la lista de vertices.
+void insertarVertice(string nom)
+{
+    struct Vertice *nuevoVertice = new Vertice(nom);
+
+    nuevoVertice->sigV = grafo;
+    grafo = nuevoVertice;
+}
+
+void insertarVertice2(string nom)
+{
+    struct Vertice *nuevoVertice = new Vertice(nom);
+
+    nuevoVertice->sigV = grafo;
+    grafo = nuevoVertice;
+}
+
+struct Vertice *   buscarVertice(string origen)
+{
+    struct Vertice *tempV = grafo;
+    while(tempV != NULL)
+    {
+        if(tempV->nombre == origen)
+            return tempV;
+
+        tempV = tempV->sigV;
+    }
+    return NULL;//no lo encontro
+}
+
+//Funcion para vertices, modifica el nombre
+bool modificarVertice(string nombre, string nuevoNombre)
+{
+    Vertice * tempV = buscarVertice(nombre);
+
+    if ( tempV == NULL)
+    {
+        cout<<"Vertice no encontrado";
+        return false;
+    }
+    else
+    {
+        tempV->nombre = nuevoNombre;
+        cout<<"\nModificado con exito.";
+        return true;
+    }
+}
+
+//Funcion que permite eliminar un vertice
+bool eliminarVertice(string nom, Vertice * sigV)
+{
+    if(sigV == NULL)
+    {
+        cout <<"\nLista vacia";
+        return false;
+    }
+    else if(sigV->nombre== nom)
+    {
+        sigV = sigV->sigV;
+        return true;
+    }
+    else
+    {
+        Vertice *temp = sigV;
+        Vertice *tempAnt= sigV;
+        while(temp != NULL)
+        {
+
+            if(temp->nombre == nom) //borrar
+            {
+                tempAnt->sigV  = temp->sigV;
+                return true;
+            }
+
+            tempAnt= temp;
+            temp = temp->sigV;
+        }
+
+        if(temp==NULL)
+        {
+            cout<<"El nombre no esta en la lista.";
+            return false;
+        }
+
+    }
+}
+
+void imprimirVertce(Vertice* lista)
+{
+    if(lista== NULL)
+        cout<<"\nLa lista esta vacia.";
+    else
+    {
+        Vertice* temp = lista;
+        while(temp != NULL)
+        {
+
+            cout<<temp->nombre<<endl;
+            temp = temp->sigV;
+        }
     }
 }
 
@@ -630,6 +718,7 @@ void cargarDatos()
     insertarArco2("E",10,"B");
 }
 
+
 void amplitud()
 {
     struct Vertice *tempV = grafo;
@@ -686,12 +775,12 @@ bool existeRuta = false;
 bool buscarRuta( struct Vertice *origen, string destino)
 {
 
-    if((origen == NULL) or (origen->visitado== true))
+    if((origen == NULL) || (origen->visitado== true))
         return existeRuta;
 
     if(origen->nombre == destino)
     {
-        existeRuta= true;
+        existeRuta = true;
         return existeRuta;
     }
     origen->visitado =true;
@@ -703,11 +792,13 @@ bool buscarRuta( struct Vertice *origen, string destino)
         buscarRuta(buscarVertice(tempA->destino), destino);
         tempA = tempA->sigA;
     }
+    return existeRuta;
+
 }
 
 bool imprimirRuta(struct Vertice *origen, string destino, string ruta)
 {
-    if((origen == NULL) or (origen->visitado== true))
+    if((origen == NULL) || (origen->visitado== true))
         return existeRuta;
 
     if(origen->nombre == destino)
@@ -750,36 +841,6 @@ bool imprimirRutaconDistancias(struct Vertice *origen, string destino, string ru
     }
     origen->visitado =false;
 }
-//variables globales
-string rutaMenor = "";
-int tiempoMenor = 0;
-// rutaAleatoria
-/*bool rutaAleatoria(struct Vertice *origen, string destino, string ruta, int ti)
-{
-    if((origen == NULL) or (origen->visitado== true))
-        return existeRuta;
-
-    if(origen->nombre == destino)
-    {
-        if((tiempoMenor==0) || (ti < tiempoMenor))
-        {
-            tiempoMenor = ti;
-            rutaMenor = ruta+destino;
-        }
-        existeRuta= true;
-        return existeRuta;
-    }
-    origen->visitado =true;
-
-    struct Arco *tempA =origen->subListaArcos;
-    while(tempA != NULL)
-    {
-
-        rutaAleatoria(buscarVertice(tempA->destino), destino, ruta+origen->nombre, ti + tempA->tiempo);
-        tempA = tempA->sigA;
-    }
-    origen->visitado =false;
-}*/
 
 string ArcoRandom(Arco*lista)
 {
@@ -1057,75 +1118,80 @@ int main()
 
                 }
             }
-
-            if(op == 3)
-            {
-                int opera;
-                opera = -1;
-                while(opera != 0)
-                {
-                    cout<<"Ingrese 1 si desea crear una persona"<<endl;
-
-                    cout<<"Ingrese 2 si desea modificar una persona"<<endl;
-
-                    cout<<"Ingrese 3 si desea borrar una persona"<<endl;
-
-                    cout<<"Ingrese 0 para salir"<<endl;
-
-                    cout<<"Ingrese la opcion que desea realizar: ";
-
-                    cin  >> opera;
-                    cout<<endl;
-                }
-            }
-
-            if (op == 5)
-            {
-
-            }
-
-            if (op == 6)
-            {
-                masAmigos(lPersonas,"Amistad");
-                cout<<endl;
-            }
-
-            if (op == 7)
-            {
-                primerPuesto(lPersonas,"Rapidez");
-                cout<<endl;
-            }
-
-            if (op == 8)
-            {
-                primerPuesto(lPersonas,"Lento");
-                cout<<endl;
-            }
-
-            if (op == 10)
-            {
-                Doxeados(lPersonas);
-                cout<<endl;
-            }
-
-            if (op == 12)
-            {
-                cout<<"Lista de personas registradas: "<<endl;
-                imprimirListaPersonas(lPersonas);
-                string PersonaX;
-                cout<<"Ingrese el nombre de la persona: ";
-                cin >> PersonaX;
-                amigosPersonaX(PersonaX);
-                cout<<endl;
-            }
-
-            if (op == 13)
-            {
-                masAmigos(lPersonas,"La_bocchi");
-                cout<<endl;
-            }
-
         }
+
+        if(op == 3)
+        {
+            int opera;
+            opera = -1;
+            while(opera != 0)
+            {
+                cout<<"Ingrese 1 si desea crear una persona"<<endl;
+
+                cout<<"Ingrese 2 si desea modificar una persona"<<endl;
+
+                cout<<"Ingrese 3 si desea borrar una persona"<<endl;
+
+                cout<<"Ingrese 0 para salir"<<endl;
+
+                cout<<"Ingrese la opcion que desea realizar: ";
+
+                cin  >> opera;
+                cout<<endl;
+            }
+        }
+
+        if (op == 5)
+        {
+            int cont = 0;
+            if
+            imprimirinicio(lPersonas);
+            AvancePersonas(lPersonas);
+        }
+
+        if (op == 6)
+        {
+            masAmigos(lPersonas,"Amistad");
+            cout<<endl;
+        }
+
+        if (op == 7)
+        {
+            primerPuesto(lPersonas,"Rapidez");
+            cout<<endl;
+        }
+
+        if (op == 8)
+        {
+            primerPuesto(lPersonas,"Lento");
+            cout<<endl;
+        }
+
+        if (op == 10)
+        {
+            Doxeados(lPersonas);
+            cout<<endl;
+        }
+
+        if (op == 12)
+        {
+            cout<<"Lista de personas registradas: "<<endl;
+            imprimirListaPersonas(lPersonas);
+            string PersonaX;
+            cout<<"Ingrese el nombre de la persona: ";
+            cin >> PersonaX;
+            amigosPersonaX(PersonaX);
+            cout<<endl;
+        }
+
+        if (op == 13)
+        {
+            masAmigos(lPersonas,"La_bocchi");
+            cout<<endl;
+        }
+
     }
+
 }
+
 
