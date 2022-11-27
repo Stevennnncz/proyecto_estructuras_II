@@ -35,7 +35,7 @@ struct Arco
 };
 
 struct Vertice *grafo;// el apuntador inicial del grafo
-
+struct Vertice *grafo2;
 //Lista de objetos persona
 struct Persona
 {
@@ -294,8 +294,8 @@ void insertarVertice2(string nom)
 {
     struct Vertice *nuevoVertice = new Vertice(nom);
 
-    nuevoVertice->sigV = grafo;
-    grafo = nuevoVertice;
+    nuevoVertice->sigV = grafo2;
+    grafo2 = nuevoVertice;
 }
 
 struct Vertice *   buscarVertice(string origen)
@@ -310,100 +310,9 @@ struct Vertice *   buscarVertice(string origen)
     }
     return NULL;//no lo encontro
 }
-
-//Funcion para vertices, modifica el nombre
-bool modificarVertice(string nombre, string nuevoNombre)
+struct Vertice *   buscarVertice2(string origen)
 {
-    Vertice * tempV = buscarVertice(nombre);
-
-    if ( tempV == NULL)
-    {
-        cout<<"Vertice no encontrado";
-        return false;
-    }
-    else
-    {
-        tempV->nombre = nuevoNombre;
-        cout<<"\nModificado con exito.";
-        return true;
-    }
-}
-
-//Funcion que permite eliminar un vertice
-bool eliminarVertice(string nom, Vertice * sigV)
-{
-    if(sigV == NULL)
-    {
-        cout <<"\nLista vacia";
-        return false;
-    }
-    else if(sigV->nombre== nom)
-    {
-        sigV = sigV->sigV;
-        return true;
-    }
-    else
-    {
-        Vertice *temp = sigV;
-        Vertice *tempAnt= sigV;
-        while(temp != NULL)
-        {
-
-            if(temp->nombre == nom) //borrar
-            {
-                tempAnt->sigV  = temp->sigV;
-                return true;
-            }
-
-            tempAnt= temp;
-            temp = temp->sigV;
-        }
-
-        if(temp==NULL)
-        {
-            cout<<"El nombre no esta en la lista.";
-            return false;
-        }
-
-    }
-}
-
-void imprimirVertce(Vertice* lista)
-{
-    if(lista== NULL)
-        cout<<"\nLa lista esta vacia.";
-    else
-    {
-        Vertice* temp = lista;
-        while(temp != NULL)
-        {
-
-            cout<<temp->nombre<<endl;
-            temp = temp->sigV;
-        }
-    }
-}
-
-//inserción al inicio de la lista de vertices.
-void insertarVertice(string nom)
-{
-    struct Vertice *nuevoVertice = new Vertice(nom);
-
-    nuevoVertice->sigV = grafo;
-    grafo = nuevoVertice;
-}
-
-void insertarVertice2(string nom)
-{
-    struct Vertice *nuevoVertice = new Vertice(nom);
-
-    nuevoVertice->sigV = grafo;
-    grafo = nuevoVertice;
-}
-
-struct Vertice *   buscarVertice(string origen)
-{
-    struct Vertice *tempV = grafo;
+    struct Vertice *tempV = grafo2;
     while(tempV != NULL)
     {
         if(tempV->nombre == origen)
@@ -512,8 +421,8 @@ void insertarArco(string origen, int ti, string des)
 
 void insertarArco2(string origen, int ti, string des)
 {
-    struct Vertice *vOrigen = buscarVertice(origen);
-    struct Vertice *vDestino = buscarVertice(des);
+    struct Vertice *vOrigen = buscarVertice2(origen);
+    struct Vertice *vDestino = buscarVertice2(des);
 
     if(vOrigen == NULL)
     {
@@ -553,6 +462,28 @@ struct Arco* buscarArco(string origen, int ti, string des)
 
     }
 }
+
+struct Arco* buscarArco2(string origen, int ti, string des)
+{
+    struct Vertice *vOrigen = buscarVertice2(origen);
+    struct Vertice *vDestino = buscarVertice2(des);
+    struct Arco *temp = vOrigen->subListaArcos;
+    while(temp != NULL)
+    {
+        if(vOrigen == NULL)
+        {
+            cout<<"\nNo se encuentra el origen.";
+        }
+        if(vDestino == NULL)
+        {
+            cout<<"\nNo se encuentra el destino.";
+        }
+        return temp;
+        temp = temp->sigA;
+
+    }
+}
+
 void modificarArco(int ti,int nuevoti, string nuevodes, string des, Arco*lista, string origen)
 {
 
@@ -880,26 +811,24 @@ void AvancePersonas(Persona* lista)
     else
     {
         Persona*temp = lista;
-        string origen;
-        origen = temp->verticeInicial;
-
-
-        if(temp->formaDeAvance==1)
+        string origen = temp->verticeInicial;
+        cout<<endl;
+        cout<<"Avance aleatorio"<<endl;
+        while (temp != NULL)
         {
-            while (temp != NULL)
+            if(temp->formaDeAvance==1)
             {
                 struct Vertice *vOrigen = buscarVertice(origen);
                 struct Arco *arc = vOrigen->subListaArcos;
-                cout<<"Avance aleatorio"<<endl;
+
                 if (buscarRuta(vOrigen, temp->Adondevoy)==true)
                 {
-                    cout<<ArcoRandom(arc);
                     cout<<temp->nombre<<"  se dirige a "<<temp->Adondevoy<<" y le quedan "<<temp->minCaminata<<" minutos para llegar"<<endl;
                 }
-
                 temp = temp->sig;
-            }
 
+            }
+            temp = temp->sig;
         }
 
 
@@ -1144,7 +1073,7 @@ int main()
         if (op == 5)
         {
             int cont = 0;
-            if
+
             imprimirinicio(lPersonas);
             AvancePersonas(lPersonas);
         }
@@ -1193,5 +1122,4 @@ int main()
     }
 
 }
-
 
