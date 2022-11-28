@@ -774,14 +774,6 @@ int imprimirtiempo(struct Vertice *origen, string destino, string inicio, int ti
     origen->visitado =false;
 }
 
-string ArcoRandom(Arco*lista)
-{
-    char alphabet[5] = {'A','B','C','D','E'};
-    char ch = alphabet[rand() % 5];
-    string s(1,ch);
-    return s;
-}
-
 void imprimirinicio(Persona*lista)
 {
     if(lista == NULL)
@@ -802,24 +794,57 @@ void imprimirinicio(Persona*lista)
     }
 }
 
-void AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen,string soy)
+void AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen,string soy, string donde)
 {
+    int num1 = 12;
+    int num2 = 6;
+    int num3 = 8;
+    int num4 = 10;
+    int num5 = 14;
     struct Vertice *vOrigen = buscarVertice(origen);
     struct Arco *arc = vOrigen->subListaArcos;
     if (buscarRuta(vOrigen, voy)==true)
     {
-        cout<<nombre<<"  se dirige a "<<voy<<" y le quedan "<<minutos<<" minutos para llegar"<<endl;
+        while(arc != NULL)
+        {
+            if (arc->tiempo == num1||arc->tiempo == num2||arc->tiempo == num3||
+                arc->tiempo == num4||arc->tiempo == num5)
+            {
+
+                cout<<nombre<<"  se dirige a "<<voy<<" y le quedan "<<minutos<<" minutos para llegar"<<endl;
+                donde = vOrigen->nombre;
+                cout<<donde<<endl;
+                break;
+            }
+            arc = arc->sigA;
+        }
     }
 }
 
-void AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string origen, string soy)
+void AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string origen, string soy, string donde)
 {
+    int num1 = 12;
+    int num2 = 6;
+    int num3 = 8;
+    int num4 = 10;
+    int num5 = 14;
     struct Vertice *vOrigen = buscarVertice2(origen);
     struct Arco *arc = vOrigen->subListaArcos;
     if (buscarRuta(vOrigen, voy)==true)
     {
-        
-        cout<<nombre<<"  se dirige a "<<voy<<" y le quedan "<<minutos<<" minutos para llegar"<<endl;
+        while(arc != NULL)
+        {
+            if (arc->tiempo == num1||arc->tiempo == num2||arc->tiempo == num3||
+                arc->tiempo == num4||arc->tiempo == num5)
+            {
+
+                cout<<nombre<<"  se dirige a "<<voy<<" y le quedan "<<minutos<<" minutos para llegar"<<endl;
+                donde = vOrigen->nombre;
+                cout<<donde<<endl;
+                break;
+            }
+            arc = arc->sigA;
+        }
     }
 }
 
@@ -833,17 +858,18 @@ void AvancePersonas(Persona* lista)
     else
     {
         Persona*temp = lista;
-        string origen = temp->verticeInicial;
+        string origen;
         cout<<endl;
 
         while (temp != NULL)
         {
             if(temp->formaDeAvance==1)
             {
+                origen = temp->verticeInicial;
                 cout<<"Avance aleatorio grafo 1"<<endl;
-                AvanceAleatorioGrafo(temp->nombre,temp->Adondevoy,temp->minCaminata, origen, temp->verticeInicial);
+                AvanceAleatorioGrafo(temp->nombre,temp->Adondevoy,temp->minCaminata, origen, temp->verticeInicial, temp->Dedondesoy);
                 cout<<"Avance aleatorio grafo 2"<<endl;
-                AvanceAleatorioGrafo2(temp->nombre,temp->Adondevoy,temp->minCaminata, origen,temp->verticeInicial);
+                AvanceAleatorioGrafo2(temp->nombre,temp->Adondevoy,temp->minCaminata, origen,temp->verticeInicial,temp->Dedondesoy);
             }
             temp = temp->sig;
         }
