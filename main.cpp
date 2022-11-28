@@ -705,7 +705,7 @@ void desmarcar()
 bool existeRuta = false;
 bool buscarRuta( struct Vertice *origen, string destino)
 {
-
+    struct Arco *tempA =origen->subListaArcos;
     if((origen == NULL) || (origen->visitado== true))
         return existeRuta;
 
@@ -716,7 +716,7 @@ bool buscarRuta( struct Vertice *origen, string destino)
     }
     origen->visitado =true;
 
-    struct Arco *tempA =origen->subListaArcos;
+
     while(tempA != NULL)
     {
 
@@ -750,24 +750,25 @@ bool imprimirRuta(struct Vertice *origen, string destino, string ruta)
     origen->visitado =false;
 }
 
-bool imprimirRutaconDistancias(struct Vertice *origen, string destino, string ruta, int dis)
+int imprimirtiempo(struct Vertice *origen, string destino, string inicio, int ti)
 {
+    struct Arco *tempA =origen->subListaArcos;
     if((origen == NULL) or (origen->visitado== true))
         return existeRuta;
 
     if(origen->nombre == destino)
     {
-        cout<<"\nLa ruta es: "<<ruta<<destino<<" La distancia es: "<<dis;
+        cout<<"\nLa ruta es: "<<inicio<<destino<<" El tiempo es: "<<ti;
         existeRuta= true;
         return existeRuta;
+        return ti;
     }
     origen->visitado =true;
 
-    struct Arco *tempA =origen->subListaArcos;
+
     while(tempA != NULL)
     {
-        imprimirRutaconDistancias(buscarVertice(tempA->destino), destino,
-                                  ruta+origen->nombre, dis + tempA->tiempo);
+        imprimirtiempo(buscarVertice(tempA->destino), destino, inicio+origen->nombre, ti + tempA->tiempo);
         tempA = tempA->sigA;
     }
     origen->visitado =false;
@@ -801,7 +802,7 @@ void imprimirinicio(Persona*lista)
     }
 }
 
-void AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen)
+void AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen,string soy)
 {
     struct Vertice *vOrigen = buscarVertice(origen);
     struct Arco *arc = vOrigen->subListaArcos;
@@ -811,12 +812,13 @@ void AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen)
     }
 }
 
-void AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string origen)
+void AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string origen, string soy)
 {
     struct Vertice *vOrigen = buscarVertice2(origen);
     struct Arco *arc = vOrigen->subListaArcos;
     if (buscarRuta(vOrigen, voy)==true)
     {
+        
         cout<<nombre<<"  se dirige a "<<voy<<" y le quedan "<<minutos<<" minutos para llegar"<<endl;
     }
 }
@@ -839,9 +841,9 @@ void AvancePersonas(Persona* lista)
             if(temp->formaDeAvance==1)
             {
                 cout<<"Avance aleatorio grafo 1"<<endl;
-                AvanceAleatorioGrafo(temp->nombre,temp->Adondevoy,temp->minCaminata, origen);
+                AvanceAleatorioGrafo(temp->nombre,temp->Adondevoy,temp->minCaminata, origen, temp->verticeInicial);
                 cout<<"Avance aleatorio grafo 2"<<endl;
-                AvanceAleatorioGrafo2(temp->nombre,temp->Adondevoy,temp->minCaminata, origen);
+                AvanceAleatorioGrafo2(temp->nombre,temp->Adondevoy,temp->minCaminata, origen,temp->verticeInicial);
             }
             temp = temp->sig;
         }
