@@ -47,11 +47,12 @@ struct Persona
     int minCaminata;//duracion caminata
     string Dedondesoy;
     string Adondevoy;
+    string Actual;
     Persona *sig;
 
     struct Amigos *sublista;
 
-    Persona(string n, int FA, string VI, int ind,int num, int minC, string soy, string voy)
+    Persona(string n, int FA, string VI, int ind,int num, int minC, string soy, string voy, string actual)
     {
         nombre = n;
         verticeInicial = VI;
@@ -61,6 +62,7 @@ struct Persona
         Dedondesoy = soy;
         NumeroAmigos = num;
         Adondevoy= voy;
+        Actual = actual;
         sublista = NULL;
         sig = NULL;
     }
@@ -90,11 +92,11 @@ struct Persona*BuscarPersona(string Name)
 }
 
 //Funcion que inserta una nueva persona a la lista
-void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC, string soy, string voy)
+void insertarPersona(string name, int tipoAvanze, string verticeI,int id,int n, int minC, string soy, string voy,string actual)
 {
     if(BuscarPersona(name) == NULL)
     {
-        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy, voy);
+        Persona*nn = new Persona(name,tipoAvanze,verticeI,id, n, minC, soy, voy, actual);
         nn->sig = lPersonas;
         lPersonas = nn;
     }
@@ -563,27 +565,29 @@ void imprimirArco(int ti, string des, string origen)
 void cargarDatos()
 {
     //Personas
-    insertarPersona("Andrés",2,"B",2745,0,0,"","A");
-    insertarPersona("Ana",4,"B",3298,0,0,"","E");
-    insertarPersona("Eric",1,"A",4673,0,0,"","D");
-    insertarPersona("María",2,"D",9001,0,0,"","C");
-    insertarPersona("Evelyn",2,"B",9872,0,0,"", "D");
-    insertarPersona("José",3,"C",4587,0,0,"","A");
-    insertarPersona("Iván",2,"D",9120,0,0,"", "B");
-    insertarPersona("Leo",1,"B",7581,0,0,"", "C");
-    insertarPersona("Sara",3,"D",1260,0,0,"", "E");
-    insertarPersona("Helena",4,"A",3965,0,0,"", "E");
 
-    insertarPersona("Emma",4,"B",6301,0,0,"", "A");
-    insertarPersona("Manuel",2,"C",6749,0,0,"", "E");
-    insertarPersona("Mariana",1,"C",2710,0,0,"", "D");
-    insertarPersona("Isabel",3,"A",2916,0,0,"", "C");
-    insertarPersona("Jorge",3,"D",4528,0,0,"", "A");
-    insertarPersona("Gabriel",1,"A",6471,0,0,"", "D");
-    insertarPersona("Eduardo",4,"C",9371,0,0,"","B");
-    insertarPersona("Lucía",2,"B",1289,0,0,"","C");
-    insertarPersona("Gerardo",1,"A",3283,0,0,"", "E");
-    insertarPersona("Johana",4,"D",8672,0,0,"", "E");
+    insertarPersona("Andrés",2,"B",2745,0,0,"","A","");
+    insertarPersona("Ana",4,"B",3298,0,0,"","E","");
+    insertarPersona("Eric",1,"A",4673,0,0,"","D","");
+    insertarPersona("María",2,"D",9001,0,0,"","C","");
+    insertarPersona("Evelyn",2,"B",9872,0,0,"", "D","");
+    insertarPersona("José",3,"C",4587,0,0,"","A","");
+    insertarPersona("Iván",2,"D",9120,0,0,"", "B","");
+    insertarPersona("Leo",1,"B",7581,0,0,"", "C","");
+    insertarPersona("Sara",3,"D",1260,0,0,"", "E","");
+    insertarPersona("Helena",4,"A",3965,0,0,"", "E","");
+
+    insertarPersona("Emma",4,"B",6301,0,0,"", "A","");
+    insertarPersona("Manuel",2,"C",6749,0,0,"", "E","");
+    insertarPersona("Mariana",1,"C",2710,0,0,"", "D","");
+    insertarPersona("Isabel",3,"A",2916,0,0,"", "C","");
+    insertarPersona("Jorge",3,"D",4528,0,0,"", "A","");
+    insertarPersona("Gabriel",1,"A",6471,0,0,"", "D","");
+    insertarPersona("Eduardo",4,"C",9371,0,0,"","B","");
+    insertarPersona("Lucía",2,"B",1289,0,0,"","C","");
+    insertarPersona("Gerardo",1,"A",3283,0,0,"", "E","");
+    insertarPersona("Johana",4,"D",8672,0,0,"", "E","");
+
 
     //Vertices
     insertarVertice("A");
@@ -774,28 +778,31 @@ bool imprimirRuta(struct Vertice *origen, string destino, string ruta)
     origen->visitado =false;
 }
 
-int imprimirtiempo(struct Vertice *origen, string destino, string inicio, int ti)
+
+bool imprimirRutaconTiempo(struct Vertice *origen, string destino,string ruta, int ti)
 {
-    struct Arco *tempA =origen->subListaArcos;
     if((origen == NULL) or (origen->visitado== true))
         return existeRuta;
 
     if(origen->nombre == destino)
     {
+        cout<<" El tiempo de llegada es: "<<ti<<endl;
         existeRuta= true;
         return existeRuta;
-        return ti;
     }
     origen->visitado =true;
 
-
+    struct Arco *tempA =origen->subListaArcos;
     while(tempA != NULL)
     {
-        imprimirtiempo(buscarVertice(tempA->destino), destino, inicio+origen->nombre, ti + tempA->tiempo);
+        imprimirRutaconTiempo(buscarVertice(tempA->destino), destino,
+                              ruta+origen->nombre,ti + tempA->tiempo);
         tempA = tempA->sigA;
     }
     origen->visitado =false;
 }
+
+
 
 void imprimirinicio(Persona*lista)
 {
@@ -840,6 +847,7 @@ string AvanceAleatorioGrafo(string nombre,string voy, int minutos, string origen
         }
         arc = arc->sigA;
     }
+    return "miau";
 }
 
 string AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string origen, string soy, string donde)
@@ -864,44 +872,58 @@ string AvanceAleatorioGrafo2(string nombre,string voy, int minutos, string orige
         }
         arc = arc->sigA;
     }
-    return "Pero que a pasado";
+    return "Pero que a pasao";
 }
 
 int cont = 0;
 void AvancePersonasGrafo(Persona* lista)
 {
+    int num1 = 12;
+    int num2 = 6;
+    int num3 = 8;
+    int num4 = 10;
+    int num5 = 14;
+    Persona*temp = lista;
+    string origen;
+    string donde;
+    string destino;
+    cout<<endl;
     if(lista == NULL)
     {
         cout<<"\nNo hay personas en la lista.";
     }
     else
     {
-        Persona*temp = lista;
-
-        string origen;
-        string donde;
-        cout<<endl;
-
         while (temp != NULL)
         {
             if(temp->formaDeAvance==1)
             {
-                if(temp->verticeInicial != temp->Adondevoy || temp->Dedondesoy!=temp->verticeInicial)
+                struct Vertice *vOrigen = buscarVertice(temp->verticeInicial);
+                struct Arco *arc = vOrigen->subListaArcos;
+                if (imprimirRutaconTiempo(vOrigen, temp->Adondevoy,"",0)==true)
                 {
+                    if (arc->tiempo == num1||arc->tiempo == num2||arc->tiempo == num3||
+                            arc->tiempo == num4||arc->tiempo == num5)
+                    {
+                        if (temp->Dedondesoy != arc->destino)
+                        {
+                            cout<<"Avance aleatorio grafo 1 "<<temp->nombre<<endl;
+                            cout<<"Vertice inicial "<<temp->verticeInicial<<endl;
+                            cout<<temp->nombre<<"  se dirige a "<<temp->Adondevoy<<endl;
+                            cout<<"Vertice actual "<<arc->destino<<endl;
+                            bool caminar = imprimirRutaconTiempo(vOrigen, temp->Adondevoy,"",0);
+                            temp->Dedondesoy = temp->verticeInicial;
+                            temp->verticeInicial = arc->destino;
+                        }
 
-                    origen = temp->verticeInicial;
-                    cout<<"Avance aleatorio grafo 1"<<temp->nombre<<endl;
-
-                    donde = AvanceAleatorioGrafo(temp->nombre,temp->Adondevoy,temp->minCaminata, origen, temp->verticeInicial, temp->Dedondesoy);
-                    temp->Dedondesoy = temp->verticeInicial;
-                    temp->verticeInicial = donde;
-                    cout<<temp->verticeInicial<<endl;
+                    }
                 }
             }
             temp = temp->sig;
         }
     }
 }
+
 
 void AvancePersonasGrafo2(Persona* lista)
 {
@@ -1178,6 +1200,30 @@ int main()
             imprimirinicio(lPersonas);
             AvancePersonasGrafo(lPersonas);
             AvancePersonasGrafo2(lPersonas);
+
+            int operacio;
+            operacio = -1;
+            while(operacio != 0)
+            {
+                cout<<endl;
+                cout<<endl;
+                cout<<"Ingrese 1 si desea ver el siguiente avance"<<endl;
+
+                cout<<"Ingrese 0 para salir"<<endl;
+
+                cout<<"Ingrese la opcion que desea realizar: ";
+
+                cin  >> operacio;
+                cout<<endl;
+                if(operacio == 1)
+                {
+                    AvancePersonasGrafo(lPersonas);
+                    cout<<endl;
+                    cout<<endl;
+                    AvancePersonasGrafo2(lPersonas);
+                }
+            }
+
         }
 
         if (op == 6)
